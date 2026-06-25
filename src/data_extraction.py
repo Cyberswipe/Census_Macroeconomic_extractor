@@ -3,34 +3,6 @@ data_extraction.py
 ------------------
 Handles all inbound API calls for the MEI + Census pipeline.
 
-Key changes from v1.0
----------------------
-Census
-  - API key sourced from environment variable CENSUS_API_KEY
-    (never read from config.json / disk).
-  - BeautifulSoup scraping wrapped in dedicated helper with error
-    handling; invalid rows skipped, not crashed on.
-  - urllib replaced with ``requests`` throughout (consistent retry
-    surface, timeout support, Session reuse).
-  - Incremental row concat replaced with a list-append + single
-    pd.concat (O(n) not O(n²)).
-  - All bare ``except Exception`` narrowed to specific exception types
-    with re-raise or structured logging.
-
-FRED
-  - API key sourced from environment variable FRED_API_KEY.
-  - apiFile (open file handle on __init__) replaced with a proper
-    context-managed write at call time — avoids leaked file handles.
-  - Inner observation loop replaced with list-append + single concat
-    (was O(observations * series) pd.concat inside loop).
-  - Retry loop logic simplified; ``while True / break`` replaced with
-    explicit counter and clean exit paths.
-  - ``response`` variable referenced before assignment bug (when
-    rate-limit max retries exhausted) fixed.
-  - FREDExtract.__init__ no longer opens a file handle; api_log_path
-    stored and written during _fred_get_data.
-"""
-
 from __future__ import annotations
 
 import json
