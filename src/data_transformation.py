@@ -3,26 +3,6 @@ data_transformation.py
 -----------------------
 Transforms raw extracted data into monthly time-series DataFrames.
 
-Key changes from v1.0
----------------------
-Census
-  - ``import pandas as pd`` and ``import time`` moved to module level
-    (were inside transform_census_data body).
-  - Missing-series warning uses logger instead of bare print.
-  - ``rename(inplace=True)`` replaced with assignment (safer with
-    chained operations).
-
-FRED
-  - _fred_pivot_input is the only place where a pivot is performed;
-    downstream methods call it once and chain from there.
-  - transform_fred_daily_weekly / quarterly_annual accept the raw
-    long DataFrame so callers pass the same shape everywhere.
-  - All resample offsets updated for pandas ≥ 2.2 (``"ME"`` instead
-    of deprecated ``"M"``; ``"MS"`` already correct).
-  - Stats dicts are consistently shaped across all three transform
-    methods.
-"""
-
 from __future__ import annotations
 
 import time
