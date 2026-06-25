@@ -3,16 +3,6 @@ logger_config.py
 ----------------
 Centralised logging factory for the MEI + Census pipeline.
 
-Key changes from v1.0
----------------------
-- Log path is injected at call-time; no hardcoded Z: drive path.
-- Callers (cron_runner) supply the path so the module is portable
-  and unit-testable without a network drive.
-- RotatingFileHandler is only added when a path is supplied,
-  preventing silent failures on machines where the path is unavailable.
-- Duplicate-handler guard kept.
-- propagate=False kept to avoid double-printing in complex hierarchies.
-"""
 
 import logging
 import os
