@@ -1,0 +1,21 @@
+{
+    "_comment": "API keys are loaded from environment variables CENSUS_API_KEY and FRED_API_KEY. Do NOT commit secrets here.",
+    "census": {
+        "base_page": "https://api.census.gov/data/timeseries/eits.html",
+        "default_start_date": "from2015-01",
+        "quarterly_datasets": ["hv", "qfr", "qtax", "qpr", "qss"],
+        "request_timeout_seconds": 20
+    },
+    "fred": {
+        "api_url": "https://api.stlouisfed.org/fred/series/observations",
+        "default_start_date": "2015-01-01",
+        "max_retries": 5,
+        "retry_backoff_seconds": 5,
+        "incremental_lookback_months": 4
+    },
+    "pipeline": {
+        "incremental_lookback_months": 4,
+        "log_rotation_bytes": 5000000,
+        "log_backup_count": 3
+    }
+}
