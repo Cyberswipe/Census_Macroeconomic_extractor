@@ -3,33 +3,6 @@ data_load.py
 ------------
 Persists transformed Census and FRED data to CSV master files.
 
-Key changes from v1.0
----------------------
-General
-  - Both loaders now accept an output_path explicitly rather than
-    relying on instance state set during __init__; this makes methods
-    independently callable and testable.
-  - Atomic write pattern introduced: data is written to a ``.tmp``
-    file first, then renamed to the target path.  This prevents a
-    half-written CSV from corrupting the master on crash.
-  - Blank-value logging loop replaced with a vectorised implementation
-    (avoid iterrows for DataFrames with many rows/columns).
-  - Column alignment now uses ``reindex`` instead of manual concat of
-    NaN columns (cleaner, avoids fragmentation warning).
-  - Duplicate column and row deduplication is applied once at the end
-    of the merge, not scattered throughout.
-
-Census-specific
-  - Index normalisation unified into a single helper.
-
-FRED-specific
-  - The ``isinstance(new_df[col].iloc[0], pd.DataFrame)`` cell-type
-    guard removed; it was a band-aid for a bug in the transformation
-    stage (now fixed there).  If a cell contains a DataFrame the load
-    should fail loudly, not silently mangle the data.
-  - ``ValueError`` raised promptly when output_csv is missing.
-"""
-
 from __future__ import annotations
 
 import json
