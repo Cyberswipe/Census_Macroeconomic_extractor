@@ -3,26 +3,6 @@ cron_runner.py
 --------------
 Orchestrates the unified MEI (FRED) + Census pipeline.
 
-Key changes from v1.0
----------------------
-- sys.path.insert with hardcoded Z: drive path removed.
-  Use PYTHONPATH or install the package instead.
-- API keys are no longer passed via config.json.
-  Set CENSUS_API_KEY and FRED_API_KEY as environment variables
-  (e.g. in your .env file, Windows Task Scheduler action, or CI secret).
-- CURRENT_DIR is derived from __file__ so the script runs correctly
-  from any working directory.
-- Logging path injected into get_logger (no hardcoded drive path).
-- Census and MEI pipelines are each wrapped in their own try/except
-  and individually guarded — a Census failure does not abort MEI.
-- compute_start_date / compute_census_start_date merged into a single
-  generic helper.
-- generate_job_id uses a file lock (via a simple temp-file strategy)
-  to avoid duplicate IDs when two processes start simultaneously.
-- FutureWarning suppression moved here (single point of control).
-- Both pipelines log their own stats via json.dumps for auditability.
-- Renamed public method references to match the refactored class API.
-
 Usage
 -----
     # Set secrets
